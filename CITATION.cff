@@ -1,0 +1,11 @@
+cff-version: 0.1.0
+title: "gais"
+author:
+  - family-names: Sajid
+    given-names: Hanif
+version: "0.1.0"
+date-released: 2025-11-20
+repository-code: https://github.com/hanifsajid/gais
+license: MIT
+abstract: >
+  `gais` is a unified and consistent interface for working with multiple LLM providers.
