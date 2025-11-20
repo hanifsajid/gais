@@ -1,0 +1,393 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>API Reference &mdash; gais 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=01f34227"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Usage" href="usage.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            gais
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#gais.Anthropic"><code class="docutils literal notranslate"><span class="pre">Anthropic</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gais.BaseProvider"><code class="docutils literal notranslate"><span class="pre">BaseProvider</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#gais.BaseProvider.generate"><code class="docutils literal notranslate"><span class="pre">BaseProvider.generate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gais.BaseProvider.name"><code class="docutils literal notranslate"><span class="pre">BaseProvider.name</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#gais.DeepSeek"><code class="docutils literal notranslate"><span class="pre">DeepSeek</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gais.Fireworks"><code class="docutils literal notranslate"><span class="pre">Fireworks</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gais.Gemini"><code class="docutils literal notranslate"><span class="pre">Gemini</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gais.Generator"><code class="docutils literal notranslate"><span class="pre">Generator</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#gais.Generator.generate"><code class="docutils literal notranslate"><span class="pre">Generator.generate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#gais.Groq"><code class="docutils literal notranslate"><span class="pre">Groq</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gais.MultiPromptGenerator"><code class="docutils literal notranslate"><span class="pre">MultiPromptGenerator</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#gais.MultiPromptGenerator.run"><code class="docutils literal notranslate"><span class="pre">MultiPromptGenerator.run()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#gais.MultiProviderGenerator"><code class="docutils literal notranslate"><span class="pre">MultiProviderGenerator</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#gais.MultiProviderGenerator.run"><code class="docutils literal notranslate"><span class="pre">MultiProviderGenerator.run()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#gais.Ollama"><code class="docutils literal notranslate"><span class="pre">Ollama</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gais.OpenAI"><code class="docutils literal notranslate"><span class="pre">OpenAI</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gais.OpenAICompatibleProvider"><code class="docutils literal notranslate"><span class="pre">OpenAICompatibleProvider</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#gais.OpenAICompatibleProvider.generate"><code class="docutils literal notranslate"><span class="pre">OpenAICompatibleProvider.generate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gais.OpenAICompatibleProvider.name"><code class="docutils literal notranslate"><span class="pre">OpenAICompatibleProvider.name</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#gais.StructuredOutput"><code class="docutils literal notranslate"><span class="pre">StructuredOutput</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#gais.StructuredOutput.extract_json"><code class="docutils literal notranslate"><span class="pre">StructuredOutput.extract_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gais.StructuredOutput.parse_response_with_fallback"><code class="docutils literal notranslate"><span class="pre">StructuredOutput.parse_response_with_fallback()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">gais</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">API Reference</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/api_reference.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-gais">
+<span id="api-reference"></span><h1>API Reference<a class="headerlink" href="#module-gais" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="gais.Anthropic">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gais.</span></span><span class="sig-name descname"><span class="pre">Anthropic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gais/providers.html#Anthropic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gais.Anthropic" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#gais.OpenAICompatibleProvider" title="gais.providers.OpenAICompatibleProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">OpenAICompatibleProvider</span></code></a></p>
+<p>Anthropic provider wrapper.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="gais.BaseProvider">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gais.</span></span><span class="sig-name descname"><span class="pre">BaseProvider</span></span><a class="reference internal" href="_modules/gais/providers.html#BaseProvider"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gais.BaseProvider" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Abstract base class for all LLM providers.</p>
+<p>Any provider should implement the <cite>generate</cite> method and <cite>name</cite> property.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="gais.BaseProvider.generate">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prompt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="_modules/gais/providers.html#BaseProvider.generate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gais.BaseProvider.generate" title="Link to this definition"></a></dt>
+<dd><p>Generate a response for the given prompt.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>prompt</strong> (<em>str</em>) – Input prompt string.</p></li>
+<li><p><strong>**kwargs</strong> – Provider-specific parameters.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Response from the LLM provider.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Any</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="gais.BaseProvider.name">
+<em class="property"><span class="k"><span class="pre">abstract</span></span><span class="w"> </span><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#gais.BaseProvider.name" title="Link to this definition"></a></dt>
+<dd><p>Human-readable name of the provider.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Provider name.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="gais.DeepSeek">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gais.</span></span><span class="sig-name descname"><span class="pre">DeepSeek</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gais/providers.html#DeepSeek"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gais.DeepSeek" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#gais.OpenAICompatibleProvider" title="gais.providers.OpenAICompatibleProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">OpenAICompatibleProvider</span></code></a></p>
+<p>DeepSeek provider wrapper.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="gais.Fireworks">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gais.</span></span><span class="sig-name descname"><span class="pre">Fireworks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gais/providers.html#Fireworks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gais.Fireworks" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#gais.OpenAICompatibleProvider" title="gais.providers.OpenAICompatibleProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">OpenAICompatibleProvider</span></code></a></p>
+<p>Fireworks provider wrapper.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="gais.Gemini">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gais.</span></span><span class="sig-name descname"><span class="pre">Gemini</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gais/providers.html#Gemini"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gais.Gemini" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#gais.OpenAICompatibleProvider" title="gais.providers.OpenAICompatibleProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">OpenAICompatibleProvider</span></code></a></p>
+<p>Gemini provider wrapper.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="gais.Generator">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gais.</span></span><span class="sig-name descname"><span class="pre">Generator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">provider</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#gais.BaseProvider" title="gais.providers.BaseProvider"><span class="pre">BaseProvider</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gais/generation.html#Generator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gais.Generator" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Single-prompt generator using a specific LLM provider.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="gais.Generator.generate">
+<span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prompt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parse</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">response_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="_modules/gais/generation.html#Generator.generate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gais.Generator.generate" title="Link to this definition"></a></dt>
+<dd><p>Generate a response for a single prompt.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>prompt</strong> (<em>str</em>) – Prompt string.</p></li>
+<li><p><strong>parse</strong> (<em>bool</em><em>, </em><em>optional</em>) – Enable structured parsing. Defaults to False.</p></li>
+<li><p><strong>response_format</strong> (<em>Any</em><em>, </em><em>optional</em>) – Structured output format (Pydantic class).</p></li>
+<li><p><strong>**kwargs</strong> – Provider-specific parameters.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Parsed or raw response from the provider.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Any</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="gais.Groq">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gais.</span></span><span class="sig-name descname"><span class="pre">Groq</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gais/providers.html#Groq"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gais.Groq" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#gais.OpenAICompatibleProvider" title="gais.providers.OpenAICompatibleProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">OpenAICompatibleProvider</span></code></a></p>
+<p>Groq provider wrapper.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="gais.MultiPromptGenerator">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gais.</span></span><span class="sig-name descname"><span class="pre">MultiPromptGenerator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">provider</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#gais.BaseProvider" title="gais.providers.BaseProvider"><span class="pre">BaseProvider</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_workers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gais/generation.html#MultiPromptGenerator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gais.MultiPromptGenerator" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Generate multiple prompts in parallel with optional per-prompt structured output.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="gais.MultiPromptGenerator.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prompts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parse</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">response_format</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/gais/generation.html#MultiPromptGenerator.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gais.MultiPromptGenerator.run" title="Link to this definition"></a></dt>
+<dd><p>Run multiple prompts in parallel with optional structured parsing.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>prompts</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – List of prompt strings.</p></li>
+<li><p><strong>parse</strong> (<em>bool</em><em>, </em><em>optional</em>) – Enable structured parsing. Defaults to False.</p></li>
+<li><p><strong>response_format</strong> (<em>Any</em><em> or </em><em>List</em><em>[</em><em>Any</em><em>]</em><em>, </em><em>optional</em>) – Single format or list of formats per prompt.</p></li>
+<li><p><strong>**kwargs</strong> – Provider-specific parameters for all prompts.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of parsed or raw responses.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[Any]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="gais.MultiProviderGenerator">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gais.</span></span><span class="sig-name descname"><span class="pre">MultiProviderGenerator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">providers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#gais.BaseProvider" title="gais.providers.BaseProvider"><span class="pre">BaseProvider</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_workers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gais/generation.html#MultiProviderGenerator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gais.MultiProviderGenerator" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Run a single prompt across multiple providers in parallel.</p>
+<p>Supports per-provider structured output via <cite>provider_params</cite>.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="gais.MultiProviderGenerator.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prompt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parse</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">response_format</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">provider_params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">common_kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/gais/generation.html#MultiProviderGenerator.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gais.MultiProviderGenerator.run" title="Link to this definition"></a></dt>
+<dd><p>Run the same prompt across multiple providers in parallel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>prompt</strong> (<em>str</em>) – Prompt string.</p></li>
+<li><p><strong>parse</strong> (<em>bool</em><em>, </em><em>optional</em>) – Enable structured parsing. Defaults to False.</p></li>
+<li><p><strong>response_format</strong> (<em>Any</em><em> or </em><em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em><em>, </em><em>optional</em>) – Single format for all providers
+or per-provider dict {provider_name: response_format}.</p></li>
+<li><p><strong>provider_params</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – Per-provider parameters.</p></li>
+<li><p><strong>**common_kwargs</strong> – Common parameters for all providers.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of results per provider.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[Dict[str, Any]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="gais.Ollama">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gais.</span></span><span class="sig-name descname"><span class="pre">Ollama</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gais/providers.html#Ollama"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gais.Ollama" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#gais.OpenAICompatibleProvider" title="gais.providers.OpenAICompatibleProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">OpenAICompatibleProvider</span></code></a></p>
+<p>Ollama provider wrapper (local server).</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="gais.OpenAI">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gais.</span></span><span class="sig-name descname"><span class="pre">OpenAI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gais/providers.html#OpenAI"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gais.OpenAI" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#gais.OpenAICompatibleProvider" title="gais.providers.OpenAICompatibleProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">OpenAICompatibleProvider</span></code></a></p>
+<p>OpenAI provider wrapper.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="gais.OpenAICompatibleProvider">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gais.</span></span><span class="sig-name descname"><span class="pre">OpenAICompatibleProvider</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">provider_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gais/providers.html#OpenAICompatibleProvider"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gais.OpenAICompatibleProvider" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#gais.BaseProvider" title="gais.providers.BaseProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseProvider</span></code></a></p>
+<p>Base wrapper for OpenAI-compatible LLM providers with optional structured parsing.</p>
+<p>Supports both OpenAI’s native parsing (if available) or a fallback
+structured parser using <cite>StructuredOutput</cite>.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="gais.OpenAICompatibleProvider.generate">
+<span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prompt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parse</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">response_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="_modules/gais/providers.html#OpenAICompatibleProvider.generate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gais.OpenAICompatibleProvider.generate" title="Link to this definition"></a></dt>
+<dd><p>Generate a response for a prompt, optionally structured.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>prompt</strong> (<em>str</em>) – Prompt string.</p></li>
+<li><p><strong>parse</strong> (<em>bool</em><em>, </em><em>optional</em>) – Enable structured parsing. Defaults to False.</p></li>
+<li><p><strong>response_format</strong> (<em>Any</em><em>, </em><em>optional</em>) – Structured output format (Pydantic class or JSON).</p></li>
+<li><p><strong>**kwargs</strong> – Provider-specific parameters.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Either raw response or SimpleNamespace with parsed result.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Any</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="gais.OpenAICompatibleProvider.name">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#gais.OpenAICompatibleProvider.name" title="Link to this definition"></a></dt>
+<dd><p>Return provider name with model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Example: “OpenAI:gpt-4”.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="gais.StructuredOutput">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gais.</span></span><span class="sig-name descname"><span class="pre">StructuredOutput</span></span><a class="reference internal" href="_modules/gais/utils.html#StructuredOutput"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gais.StructuredOutput" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Extracts structured JSON from LLM responses.
+Provides fallback behavior for providers that do not support
+beta.chat.completions.parse().</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="gais.StructuredOutput.extract_json">
+<span class="sig-name descname"><span class="pre">extract_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/gais/utils.html#StructuredOutput.extract_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gais.StructuredOutput.extract_json" title="Link to this definition"></a></dt>
+<dd><p>Attempts to extract the first valid JSON object from the text.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gais.StructuredOutput.parse_response_with_fallback">
+<span class="sig-name descname"><span class="pre">parse_response_with_fallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">response_format</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><span class="pre">BaseModel</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_retries</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gais/utils.html#StructuredOutput.parse_response_with_fallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gais.StructuredOutput.parse_response_with_fallback" title="Link to this definition"></a></dt>
+<dd><p>When provider does NOT support chat.completions.parse,
+use LLM instructions + post-parse validation.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="usage.html" class="btn btn-neutral float-left" title="Usage" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Hanif Sajid.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

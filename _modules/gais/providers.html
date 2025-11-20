@@ -1,0 +1,486 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>gais.providers &mdash; gais 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            gais
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_reference.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">gais</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">gais.providers</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for gais.providers</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">providers.py</span>
+
+<span class="sd">This module defines abstract and concrete classes for LLM providers.</span>
+<span class="sd">It includes a base interface `BaseProvider`, an OpenAI-compatible wrapper</span>
+<span class="sd">with optional structured output support, and concrete provider classes.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">types</span><span class="w"> </span><span class="kn">import</span> <span class="n">SimpleNamespace</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAI</span> <span class="k">as</span> <span class="n">OpenAIClient</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">StructuredOutput</span>
+
+<span class="n">structuredoutput</span> <span class="o">=</span> <span class="n">StructuredOutput</span><span class="p">()</span>
+
+
+<span class="c1"># ----------------------------</span>
+<span class="c1"># Base Provider Classes</span>
+<span class="c1"># ----------------------------</span>
+<div class="viewcode-block" id="BaseProvider">
+<a class="viewcode-back" href="../../api_reference.html#gais.BaseProvider">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">BaseProvider</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Abstract base class for all LLM providers.</span>
+
+<span class="sd">    Any provider should implement the `generate` method and `name` property.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="BaseProvider.generate">
+<a class="viewcode-back" href="../../api_reference.html#gais.BaseProvider.generate">[docs]</a>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">generate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prompt</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a response for the given prompt.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            prompt (str): Input prompt string.</span>
+<span class="sd">            **kwargs: Provider-specific parameters.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Any: Response from the LLM provider.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Human-readable name of the provider.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: Provider name.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="OpenAICompatibleProvider">
+<a class="viewcode-back" href="../../api_reference.html#gais.OpenAICompatibleProvider">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">OpenAICompatibleProvider</span><span class="p">(</span><span class="n">BaseProvider</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base wrapper for OpenAI-compatible LLM providers with optional structured parsing.</span>
+
+<span class="sd">    Supports both OpenAI&#39;s native parsing (if available) or a fallback</span>
+<span class="sd">    structured parser using `StructuredOutput`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">provider_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">api_key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">base_url</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the provider.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            provider_name (str): Name of the provider (e.g., &quot;OpenAI&quot;).</span>
+<span class="sd">            model (str): Model name to use.</span>
+<span class="sd">            api_key (str): API key for authentication.</span>
+<span class="sd">            base_url (str | None, optional): Optional API base URL.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">provider_name</span> <span class="o">=</span> <span class="n">provider_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="o">=</span> <span class="n">OpenAIClient</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="n">api_key</span><span class="p">,</span> <span class="n">base_url</span><span class="o">=</span><span class="n">base_url</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return provider name with model.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: Example: &quot;OpenAI:gpt-4&quot;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">provider_name</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<div class="viewcode-block" id="OpenAICompatibleProvider.generate">
+<a class="viewcode-back" href="../../api_reference.html#gais.OpenAICompatibleProvider.generate">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">generate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prompt</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">parse</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">response_format</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a response for a prompt, optionally structured.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            prompt (str): Prompt string.</span>
+<span class="sd">            parse (bool, optional): Enable structured parsing. Defaults to False.</span>
+<span class="sd">            response_format (Any, optional): Structured output format (Pydantic class or JSON).</span>
+<span class="sd">            **kwargs: Provider-specific parameters.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Any: Either raw response or SimpleNamespace with parsed result.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">base_params</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
+            <span class="s2">&quot;messages&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">prompt</span><span class="p">}],</span>
+            <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">}</span>
+
+        <span class="n">supports_native_parse</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">provider_name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;openai&quot;</span>
+            <span class="ow">and</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">,</span> <span class="s2">&quot;beta&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">beta</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="p">,</span> <span class="s2">&quot;parse&quot;</span><span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">parse</span> <span class="ow">and</span> <span class="n">supports_native_parse</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">beta</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span>
+                <span class="o">**</span><span class="n">base_params</span><span class="p">,</span>
+                <span class="n">response_format</span><span class="o">=</span><span class="n">response_format</span>
+            <span class="p">)</span>
+            <span class="n">parsed_value</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">parsed</span>
+            <span class="k">return</span> <span class="n">SimpleNamespace</span><span class="p">(</span><span class="n">raw</span><span class="o">=</span><span class="n">response</span><span class="p">,</span> <span class="n">parsed</span><span class="o">=</span><span class="n">parsed_value</span><span class="p">,</span> <span class="n">provider</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">parse</span><span class="p">:</span>
+            <span class="n">parsed_ns</span> <span class="o">=</span> <span class="n">structuredoutput</span><span class="o">.</span><span class="n">parse_response_with_fallback</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">,</span> <span class="n">base_params</span><span class="p">,</span> <span class="n">response_format</span>
+            <span class="p">)</span>
+            <span class="n">parsed_ns</span><span class="o">.</span><span class="n">provider</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+            <span class="k">return</span> <span class="n">parsed_ns</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="o">**</span><span class="n">base_params</span><span class="p">)</span></div>
+</div>
+
+
+
+<span class="c1"># ----------------------------</span>
+<span class="c1"># Concrete Providers</span>
+<span class="c1"># ----------------------------</span>
+<div class="viewcode-block" id="OpenAI">
+<a class="viewcode-back" href="../../api_reference.html#gais.OpenAI">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">OpenAI</span><span class="p">(</span><span class="n">OpenAICompatibleProvider</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;OpenAI provider wrapper.&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">api_key</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">&quot;OpenAI&quot;</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">base_url</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="DeepSeek">
+<a class="viewcode-back" href="../../api_reference.html#gais.DeepSeek">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">DeepSeek</span><span class="p">(</span><span class="n">OpenAICompatibleProvider</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;DeepSeek provider wrapper.&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">api_key</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">&quot;DeepSeek&quot;</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;https://api.deepseek.com/v1&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="Groq">
+<a class="viewcode-back" href="../../api_reference.html#gais.Groq">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Groq</span><span class="p">(</span><span class="n">OpenAICompatibleProvider</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Groq provider wrapper.&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">api_key</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">&quot;Groq&quot;</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;https://api.groq.com/openai/v1&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="Anthropic">
+<a class="viewcode-back" href="../../api_reference.html#gais.Anthropic">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Anthropic</span><span class="p">(</span><span class="n">OpenAICompatibleProvider</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Anthropic provider wrapper.&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">api_key</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">&quot;Anthropic&quot;</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;https://api.anthropic.com/v1/&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="Fireworks">
+<a class="viewcode-back" href="../../api_reference.html#gais.Fireworks">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Fireworks</span><span class="p">(</span><span class="n">OpenAICompatibleProvider</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fireworks provider wrapper.&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">api_key</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">&quot;Fireworks&quot;</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;https://api.fireworks.ai/inference/v1&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="Gemini">
+<a class="viewcode-back" href="../../api_reference.html#gais.Gemini">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Gemini</span><span class="p">(</span><span class="n">OpenAICompatibleProvider</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Gemini provider wrapper.&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">api_key</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">&quot;Gemini&quot;</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;https://generativelanguage.googleapis.com/v1beta/openai/&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="Ollama">
+<a class="viewcode-back" href="../../api_reference.html#gais.Ollama">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Ollama</span><span class="p">(</span><span class="n">OpenAICompatibleProvider</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Ollama provider wrapper (local server).&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">api_key</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">&quot;Ollama&quot;</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://localhost:11434/v1&quot;</span><span class="p">)</span></div>
+
+
+
+
+
+<span class="c1"># from abc import ABC, abstractmethod</span>
+<span class="c1"># from typing import Any</span>
+<span class="c1"># from openai import OpenAI as OpenAIClient</span>
+<span class="c1"># from .utils import StructuredOutput</span>
+<span class="c1"># from types import SimpleNamespace</span>
+
+<span class="c1"># structuredoutput = StructuredOutput()</span>
+
+
+<span class="c1"># class BaseProvider(ABC):</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     Abstract base class for all LLM providers.</span>
+
+<span class="c1">#     Any custom LLM provider should inherit from this class and implement</span>
+<span class="c1">#     the `generate` method and `name` property.</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+
+<span class="c1">#     @abstractmethod</span>
+<span class="c1">#     def generate(self, prompt: str, **kwargs) -&gt; Any:</span>
+<span class="c1">#         &quot;&quot;&quot;</span>
+<span class="c1">#         Generate a response for the given prompt.</span>
+
+<span class="c1">#         Args:</span>
+<span class="c1">#             prompt (str): The input prompt to the LLM.</span>
+<span class="c1">#             **kwargs: Provider-specific parameters.</span>
+
+<span class="c1">#         Returns:</span>
+<span class="c1">#             Any: The response object from the LLM provider.</span>
+<span class="c1">#         &quot;&quot;&quot;</span>
+<span class="c1">#         raise NotImplementedError()</span>
+
+<span class="c1">#     @property</span>
+<span class="c1">#     @abstractmethod</span>
+<span class="c1">#     def name(self) -&gt; str:</span>
+<span class="c1">#         &quot;&quot;&quot;</span>
+<span class="c1">#         Human-readable name of the provider.</span>
+
+<span class="c1">#         Returns:</span>
+<span class="c1">#             str: The provider name.</span>
+<span class="c1">#         &quot;&quot;&quot;</span>
+<span class="c1">#         raise NotImplementedError()</span>
+
+
+<span class="c1"># class OpenAICompatibleProvider(BaseProvider):</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     Base wrapper for OpenAI-compatible providers, supporting optional structured parsing.</span>
+
+<span class="c1">#     This class wraps the OpenAIClient (or compatible API client) and provides</span>
+<span class="c1">#     a unified interface for generating responses, with optional structured parsing</span>
+<span class="c1">#     using either the native OpenAI parse feature or a fallback parser.</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+
+<span class="c1">#     def __init__(self, provider_name: str, model: str, api_key: str, base_url: str | None = None):</span>
+<span class="c1">#         &quot;&quot;&quot;</span>
+<span class="c1">#         Initialize the provider.</span>
+
+<span class="c1">#         Args:</span>
+<span class="c1">#             provider_name (str): Name of the provider (e.g., &quot;OpenAI&quot;, &quot;DeepSeek&quot;).</span>
+<span class="c1">#             model (str): Model name to use (e.g., &quot;gpt-4&quot;).</span>
+<span class="c1">#             api_key (str): API key for authentication.</span>
+<span class="c1">#             base_url (str | None, optional): Optional base URL for the provider API.</span>
+<span class="c1">#         &quot;&quot;&quot;</span>
+<span class="c1">#         self.provider_name = provider_name</span>
+<span class="c1">#         self.model = model</span>
+<span class="c1">#         self.client = OpenAIClient(api_key=api_key, base_url=base_url)</span>
+
+<span class="c1">#     @property</span>
+<span class="c1">#     def name(self) -&gt; str:</span>
+<span class="c1">#         &quot;&quot;&quot;</span>
+<span class="c1">#         Provider name combined with the model name.</span>
+
+<span class="c1">#         Returns:</span>
+<span class="c1">#             str: A string like &quot;OpenAI:gpt-4&quot;.</span>
+<span class="c1">#         &quot;&quot;&quot;</span>
+<span class="c1">#         return f&quot;{self.provider_name}:{self.model}&quot;</span>
+
+<span class="c1">#     def generate(self, prompt: str, parse: bool = False, response_format=None, **kwargs) -&gt; Any:</span>
+<span class="c1">#         &quot;&quot;&quot;</span>
+<span class="c1">#         Generate a response for a given prompt, optionally parsing the output.</span>
+
+<span class="c1">#         Args:</span>
+<span class="c1">#             prompt (str): The prompt to send to the model.</span>
+<span class="c1">#             parse (bool, optional): Whether to parse the response into structured output. Defaults to False.</span>
+<span class="c1">#             response_format (Any, optional): Format for structured output (e.g., &quot;json&quot;).</span>
+<span class="c1">#             **kwargs: Additional provider-specific parameters.</span>
+
+<span class="c1">#         Returns:</span>
+<span class="c1">#             Any: Either the raw response from the API or a `SimpleNamespace` containing:</span>
+<span class="c1">#                 - `raw`: Original API response.</span>
+<span class="c1">#                 - `parsed`: Parsed structured output (if parse=True).</span>
+<span class="c1">#                 - `provider`: Name of the provider.</span>
+<span class="c1">#         &quot;&quot;&quot;</span>
+<span class="c1">#         base_params = {</span>
+<span class="c1">#             &quot;model&quot;: self.model,</span>
+<span class="c1">#             &quot;messages&quot;: [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: prompt}],</span>
+<span class="c1">#             **kwargs</span>
+<span class="c1">#         }</span>
+
+<span class="c1">#         supports_native_parse = (</span>
+<span class="c1">#             self.provider_name.lower() == &quot;openai&quot;</span>
+<span class="c1">#             and getattr(self.client, &quot;beta&quot;, None)</span>
+<span class="c1">#             and hasattr(self.client.beta.chat.completions, &quot;parse&quot;)</span>
+<span class="c1">#         )</span>
+
+<span class="c1">#         if parse and supports_native_parse:</span>
+<span class="c1">#             response = self.client.beta.chat.completions.parse(</span>
+<span class="c1">#                 **base_params,</span>
+<span class="c1">#                 response_format=response_format</span>
+<span class="c1">#             )</span>
+<span class="c1">#             parsed_value = response.choices[0].message.parsed</span>
+<span class="c1">#             return SimpleNamespace(raw=response, parsed=parsed_value, provider=self.name)</span>
+
+<span class="c1">#         if parse:</span>
+<span class="c1">#             parsed_ns = structuredoutput.parse_response_with_fallback(</span>
+<span class="c1">#                 self.client, base_params, response_format</span>
+<span class="c1">#             )</span>
+<span class="c1">#             parsed_ns.provider = self.name</span>
+<span class="c1">#             return parsed_ns</span>
+
+<span class="c1">#         return self.client.chat.completions.create(**base_params)</span>
+
+
+<span class="c1"># # ----------------------------</span>
+<span class="c1"># # Concrete provider classes</span>
+<span class="c1"># # ----------------------------</span>
+
+<span class="c1"># class OpenAI(OpenAICompatibleProvider):</span>
+<span class="c1">#     &quot;&quot;&quot;OpenAI provider wrapper.&quot;&quot;&quot;</span>
+
+<span class="c1">#     def __init__(self, model: str, api_key: str):</span>
+<span class="c1">#         super().__init__(&quot;OpenAI&quot;, model, api_key, base_url=None)</span>
+
+
+<span class="c1"># class DeepSeek(OpenAICompatibleProvider):</span>
+<span class="c1">#     &quot;&quot;&quot;DeepSeek provider wrapper.&quot;&quot;&quot;</span>
+
+<span class="c1">#     def __init__(self, model: str, api_key: str):</span>
+<span class="c1">#         super().__init__(&quot;DeepSeek&quot;, model, api_key, base_url=&quot;https://api.deepseek.com/v1&quot;)</span>
+
+
+<span class="c1"># class Groq(OpenAICompatibleProvider):</span>
+<span class="c1">#     &quot;&quot;&quot;Groq provider wrapper.&quot;&quot;&quot;</span>
+
+<span class="c1">#     def __init__(self, model: str, api_key: str):</span>
+<span class="c1">#         super().__init__(&quot;Groq&quot;, model, api_key, base_url=&quot;https://api.groq.com/openai/v1&quot;)</span>
+
+
+<span class="c1"># class Anthropic(OpenAICompatibleProvider):</span>
+<span class="c1">#     &quot;&quot;&quot;Anthropic provider wrapper.&quot;&quot;&quot;</span>
+
+<span class="c1">#     def __init__(self, model: str, api_key: str):</span>
+<span class="c1">#         super().__init__(&quot;Anthropic&quot;, model, api_key, base_url=&quot;https://api.anthropic.com/v1/&quot;)</span>
+
+
+<span class="c1"># class Fireworks(OpenAICompatibleProvider):</span>
+<span class="c1">#     &quot;&quot;&quot;Fireworks provider wrapper.&quot;&quot;&quot;</span>
+
+<span class="c1">#     def __init__(self, model: str, api_key: str):</span>
+<span class="c1">#         super().__init__(&quot;Fireworks&quot;, model, api_key, base_url=&quot;https://api.fireworks.ai/inference/v1&quot;)</span>
+
+
+<span class="c1"># class Gemini(OpenAICompatibleProvider):</span>
+<span class="c1">#     &quot;&quot;&quot;Gemini provider wrapper.&quot;&quot;&quot;</span>
+
+<span class="c1">#     def __init__(self, model: str, api_key: str):</span>
+<span class="c1">#         super().__init__(&quot;Gemini&quot;, model, api_key, base_url=&quot;https://generativelanguage.googleapis.com/v1beta/openai/&quot;)</span>
+
+
+<span class="c1"># class Ollama(OpenAICompatibleProvider):</span>
+<span class="c1">#     &quot;&quot;&quot;Ollama provider wrapper (local server).&quot;&quot;&quot;</span>
+
+<span class="c1">#     def __init__(self, model: str, api_key: str):</span>
+<span class="c1">#         super().__init__(&quot;Ollama&quot;, model, api_key, base_url=&quot;http://localhost:11434/v1&quot;)</span>
+
+
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Hanif Sajid.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
